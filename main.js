@@ -6,7 +6,14 @@ document.getElementById('pari-dispari').addEventListener('click', playPariDispar
 
 let userParola = document.getElementById('user-parola');
 let risultatoPalindromo = document.getElementById('risultato-palindromo');
-let messaggioFinale = document.getElementById('messaggio-finale');
+let messaggioFinaleParola = document.getElementById('messaggio-finale-parola');
+
+let userNumero = document.getElementById('user-numero');
+let computerNumero = document.getElementById('computer-numero');
+let messaggioFinaleNumero = document.getElementById('messaggio-finale-numero');
+
+
+//funzione che crea un array di tutte le lettere singole per poi metterle in reverse:
 
 function reverseString(str) {
     // Step 1. Use the split() method to return a new array
@@ -24,13 +31,16 @@ function reverseString(str) {
     //Step 4. Return the reversed string
     return joinArray; // "olleh"
 }
+
+//funzione per generare numero random 
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+    
+};
  
 
 
 //creare un evento click per iniziare il gioco del palindromo
-
-
-
 function playPalindromo() {
     console.log('Lets go!');
     const parola = prompt('Inserisci una parola');
@@ -42,30 +52,43 @@ function playPalindromo() {
     risultatoPalindromo.innerHTML = parola + '  scritto in reverse è : ' + reverseString(parola);
 
     if (parola == reverseString(parola)) {
-        messaggioFinale.innerHTML = 'Congratulazioni! La parola ' + parola + ' è un palindromo.'
+        messaggioFinaleParola.innerHTML = 'Congratulazioni! La parola ' + parola + ' è un palindromo.'
 
     } else {
-        messaggioFinale.innerHTML = 'Mi dispiace. La parola ' + parola + ' non è un palindromo.'
+        messaggioFinaleParola.innerHTML = 'Mi dispiace. La parola ' + parola + ' non è un palindromo.'
     }
-
-
-
-
-    
-    
-
 };
 
 
-//creare un evento click per iniziare 
+//creare un evento click per iniziare il gioco del pari dispari
 function playPariDispari() {
     console.log('Lets go!');
     const numero = parseInt(prompt('Inserisci un numero da 1 a 5'));
-    document.getElementById('user-numero').innerHTML = 'Hai scelto il numero : ' + numero + '. È pari o dispari?';
+    const pariDispari = prompt('Adesso il computer genera un numero random. La somma dei due numeri sarà pari o dispari? Scrivi "pari" o "dispari" per andare avanti.');
+    console.log('user: ' + pariDispari)
+    const pcNumero = parseInt(getRandomInt(1,5))
+    userNumero.innerHTML = 'Hai scelto il numero: ' + numero;
+    console.log('user: ' + numero);
+    computerNumero.innerHTML = 'Il computer ha scelto il numero: ' + pcNumero;
+    console.log('computer: ' + pcNumero);
+
+    let somma = numero + pcNumero;
+
+
     
-    console.log(numero);
+    
 
     //crea una condizione per controllare se il numero è pari o dispari
     //controlla che il numero non è NaN -- crea un alert se è NaN
+
+    if (isNaN(numero)) {
+        alert('Input non valido! Premi di nuovo il bottone per provare di nuovo.');
+    } else if (somma % 2 == 0 && pariDispari == 'pari') {
+        messaggioFinaleNumero.innerHTML = 'Congratulazioni! Hai vinto! La somma dei due numeri è pari.'
+    } else if (somma % 2 != 0 && pariDispari == 'dispari') {
+        messaggioFinaleNumero.innerHTML = 'Congratulazioni! Hai vinto! La somma dei due numeri è dispari.'
+    } else {
+        messaggioFinaleNumero.innerHTML = 'Mi dispiace, hai perso. Il computer ha vinto questa volta. Premi di nuovo il bottone per la rivincita!'
+    }
 
 };
